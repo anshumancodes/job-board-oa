@@ -7,7 +7,7 @@ const asyncHandler = (func) => {
       // here am executing the function!
     } catch (error) {
       // throws error and false success flag to client side
-      res.status(error.code || 500).json({
+      res.status(error.statusCode || 500).json({
         success: false,
         message: error.message,
       });
