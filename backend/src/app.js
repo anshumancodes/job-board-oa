@@ -4,7 +4,7 @@ import jobRouter from "./routes/job.routes.js";
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000"], // well this is where my frontend runs so , change it if needed
+    origin: ["http://localhost:3000","https://job-board-oa.vercel.app/"], // well this is where my frontend runs so , change it if needed
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type", "Authorization"],
