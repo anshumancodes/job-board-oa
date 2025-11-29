@@ -58,8 +58,14 @@
     ```bash
     npm install
     ```
+3.  Create a `.env.local` file in the `frontend` directory and add the following environment variables:
 
-3.  Start the development server:
+    ```env
+   NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1/jobs
+    ```
+
+
+4.  Start the development server:
     ```bash
     npm run dev
     ```
