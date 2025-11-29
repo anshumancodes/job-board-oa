@@ -11,36 +11,29 @@ const jobSchema = z.object({
 });
 
 export const createJob = asyncHandler(async (req, res) => {
-  try {
-    const { title, company, location } = req.body;
-    if (!title || !company || !location) {
-      throw new ApiError(400, "mising form values");
-    }
-    const isValidated = jobSchema.safeParse({ title, company, location });
-    if (!isValidated.success) {
-      throw new ApiError(400, "Invalid data types", parsed.error.issues);
-    }
-    const isJobCreated = await JobModel.create({
-      title,
-      company,
-      location,
-    });
+  const { title, company, location } = req.body;
 
-    return res.status(200).json(
-      new ApiResponse(
-        200,
-        {
-          job: isJobCreated,
-        },
-        "job created sucessfully"
-      )
-    );
-  } catch (error) {
-    throw new ApiError(
-      500,
-      "Something went wrong in server while creating the job"
-    );
+  // Validate input with Zod
+  const validation = jobSchema.safeParse({ title, company, location });
+
+  if (!validation.success) {
+    const errorMessages = validation.error.issues
+      .map((issue) => issue.message)
+      .join(", ");
+    throw new ApiError(400, errorMessages);
   }
+
+  // Create job in database
+  const job = await JobModel.create({
+    title,
+    company,
+    location,
+  });
+
+  // Send success response
+  return res
+    .status(201)
+    .json(new ApiResponse(201, { job }, "Job created successfully"));
 });
 
 export const fetchAllJobs = asyncHandler(async (req, res) => {
@@ -65,6 +58,35 @@ export const fetchAllJobs = asyncHandler(async (req, res) => {
     throw new ApiError(
       500,
       "Something went wrong in server while fetching jobs"
+    );
+  }
+});
+
+export const fetchJobById = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      throw new ApiError(400, "Job ID is required");
+    }
+
+    const job = await JobModel.findById(id);
+
+    if (!job) {
+      throw new ApiError(404, "Job not found");
+    }
+
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        job,
+        "Job fetched successfully"
+      )
+    );
+  } catch (error) {
+    throw new ApiError(
+      500,
+      "Something went wrong in server while fetching the job"
     );
   }
 });
@@ -113,7 +135,8 @@ export const updateJob = asyncHandler(async (req, res) => {
   } catch (error) {
     throw new ApiError(
       500,
-      "Something went wrong in server while updating the job"
+      "Something went wrong in server while updating the job",
+      error
     );
   }
 });
