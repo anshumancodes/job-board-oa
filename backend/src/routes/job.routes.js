@@ -1,6 +1,6 @@
 import {Router} from "express";
 const router=Router();
-import {createJob,fetchAllJobs,updateJob,deleteJob} from "../controllers/job.controller"
+import {createJob,fetchAllJobs,updateJob,deleteJob} from "../controllers/job.controller.js"
 
 router.route("/fetch").get(fetchAllJobs);
 router.route("/update/:id").put(updateJob);
