@@ -70,3 +70,16 @@
     npm run dev
     ```
     The application will be available at `http://localhost:3000`.
+
+
+### UI snaps:
+
+listedd jobs
+![alt text](image.png)
+updating 
+![alt text](image-1.png)
+deletion with confirmation
+![alt text](image-2.png)
+with toast/notification
+![alt text](image-3.png)
+
