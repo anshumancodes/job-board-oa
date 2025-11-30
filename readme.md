@@ -37,6 +37,7 @@
     ```env
     MONGODB_URI=your_mongodb_connection_string
     PORT=8000
+
     ```
 
 4.  Start the server:
@@ -62,6 +63,7 @@
 
     ```env
    NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1/jobs
+   
     ```
 
 
