@@ -15,6 +15,9 @@ app.use(express.urlencoded({ extended: true, limit: "12kb" }));
 
 
 // routes
+app.get("/",(req,res)=>{
+  res.send("successfully connected to job-board-oa server")
+});
 app.use("/api/v1/jobs", jobRouter);
 
 export default app;
